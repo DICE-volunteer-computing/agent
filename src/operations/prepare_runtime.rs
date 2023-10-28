@@ -8,7 +8,7 @@ use crate::{
     utils::filesystem::{download_file, untar_file},
 };
 
-pub async fn prepare_runtime(config: AgentConfig<'_>, job_execution_id: ObjectId, id: ObjectId) {
+pub async fn prepare_runtime(config: AgentConfig, job_execution_id: ObjectId, id: ObjectId) {
     fs::create_dir_all(config.get_runtime_path(
         job_execution_id.to_string().as_str(),
         id.to_string().as_str(),

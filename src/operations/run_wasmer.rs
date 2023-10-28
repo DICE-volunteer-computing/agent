@@ -4,7 +4,7 @@ use mongodb::bson::oid::ObjectId;
 
 use crate::{config::config::AgentConfig, utils::filesystem::get_wasm_file_in_dir};
 
-pub fn run_wasmer(config: AgentConfig<'_>, id: ObjectId, runtime_id: ObjectId) {
+pub fn run_wasmer(config: AgentConfig, id: ObjectId, runtime_id: ObjectId) {
     let wasm_file = get_wasm_file_in_dir(
         &config.get_runtime_path(id.to_string().as_str(), runtime_id.to_string().as_str()),
     );

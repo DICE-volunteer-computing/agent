@@ -4,6 +4,7 @@ mod threads;
 mod utils;
 
 use log::info;
+use rust_sdk::utils::env::get_registration_token;
 use simple_logger::SimpleLogger;
 use std::env::set_current_dir;
 use std::fs;
@@ -22,17 +23,18 @@ async fn main() {
     info!("--- DICE Agent ---");
 
     // --- SPECIFY CONFIGURATION ---
-    let config = AgentConfig::dev_default();
-    fs::create_dir_all(config.root).expect("could not create root directory");
-    set_current_dir(config.root).expect("could not set current directory");
+    let mut config = AgentConfig::dev_default(get_registration_token());
+    fs::create_dir_all(config.clone().root).expect("could not create root directory");
+    set_current_dir(config.clone().root).expect("could not set current directory");
 
     // --- REGISTER HOST ---
-    let host_id = register_host(config.clone()).await;
-    info!("Host ID: {}", host_id);
+    let create_host_response = register_host(config.clone()).await;
+    config = AgentConfig::dev_default(create_host_response.token);
+    info!("Host ID: {}", create_host_response.id);
 
     // --- HEARTBEAT ---
     // TODO: Split out heartbeat thread
 
     // --- MAIN LOOP ---
-    job_processor(config.clone(), host_id.clone()).await;
+    job_processor(config, create_host_response.id).await;
 }

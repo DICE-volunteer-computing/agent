@@ -1,9 +1,9 @@
 use std::collections::HashMap;
 
-use mongodb::bson::oid::ObjectId;
+use log::info;
 use rust_sdk::{
     api::host,
-    model::host::{Configuration, CreateHostDTO},
+    model::host::{Configuration, CreateHostDTO, CreateHostResponse},
 };
 use sysinfo::{DiskExt, System, SystemExt};
 
@@ -12,8 +12,8 @@ use crate::{
     utils::capabilities::{get_platform_architectures, get_platform_execution_types},
 };
 
-pub async fn register_host(config: AgentConfig<'_>) -> ObjectId {
-    println!("Registering host");
+pub async fn register_host(config: AgentConfig) -> CreateHostResponse {
+    info!("Registering host");
 
     let mut sys = System::new_all();
     sys.refresh_all();
@@ -37,5 +37,5 @@ pub async fn register_host(config: AgentConfig<'_>) -> ObjectId {
     )
     .await;
 
-    create_host_response.id
+    create_host_response
 }

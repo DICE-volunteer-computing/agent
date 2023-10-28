@@ -14,7 +14,7 @@ use crate::operations::run_wasmer::run_wasmer;
 use crate::operations::update_status::{set_host_status, set_job_execution_status};
 use crate::operations::wait_for_job_execution::wait_for_job_execution;
 
-pub async fn job_processor(config: AgentConfig<'_>, host_id: ObjectId) {
+pub async fn job_processor(config: AgentConfig, host_id: ObjectId) {
     loop {
         // Update host status to Idle
         set_host_status(config.clone(), host_id.clone(), HostStatus::Idle).await;

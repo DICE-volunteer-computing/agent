@@ -11,7 +11,7 @@ use rust_sdk::{
 
 use crate::config::config::AgentConfig;
 
-pub async fn set_host_status(config: AgentConfig<'_>, id: ObjectId, status: HostStatus) {
+pub async fn set_host_status(config: AgentConfig, id: ObjectId, status: HostStatus) {
     info!("Updating host status to \"{:?}\"", status);
 
     host::update(
@@ -25,7 +25,7 @@ pub async fn set_host_status(config: AgentConfig<'_>, id: ObjectId, status: Host
 }
 
 pub async fn set_job_execution_status(
-    config: AgentConfig<'_>,
+    config: AgentConfig,
     id: ObjectId,
     status: JobExecutionStatus,
 ) {
@@ -43,7 +43,7 @@ pub async fn set_job_execution_status(
     .await;
 }
 
-pub async fn set_artifact_status(config: AgentConfig<'_>, id: ObjectId, status: ArtifactStatus) {
+pub async fn set_artifact_status(config: AgentConfig, id: ObjectId, status: ArtifactStatus) {
     info!("Updating artifact status to \"{:?}\"", status);
 
     artifact::update(

@@ -10,12 +10,12 @@ use rust_sdk::{
 
 use crate::config::config::AgentConfig;
 
-async fn list_pending_job_executions(config: AgentConfig<'_>, id: ObjectId) -> Vec<JobExecution> {
+async fn list_pending_job_executions(config: AgentConfig, id: ObjectId) -> Vec<JobExecution> {
     let my_doc = doc! {
         "status": convert_enum_to_string(JobExecutionStatus::PendingExecution),
         "host_id": id,
     };
-    println!("{:?}", my_doc);
+    info!("{:?}", my_doc);
 
     job_execution::list(
         config.sdk_config.clone(),
@@ -27,7 +27,7 @@ async fn list_pending_job_executions(config: AgentConfig<'_>, id: ObjectId) -> V
     .await
 }
 
-pub async fn wait_for_job_execution(config: AgentConfig<'_>, id: ObjectId) -> JobExecution {
+pub async fn wait_for_job_execution(config: AgentConfig, id: ObjectId) -> JobExecution {
     let mut job_executions = vec![];
 
     while job_executions.len() == 0 {

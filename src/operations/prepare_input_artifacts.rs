@@ -9,7 +9,7 @@ use crate::{
 };
 
 pub async fn prepare_input_artifacts(
-    config: AgentConfig<'_>,
+    config: AgentConfig,
     id: ObjectId,
     input_artifacts: Vec<ObjectId>,
 ) {
@@ -23,7 +23,7 @@ pub async fn prepare_input_artifacts(
     set_current_dir(config.root).expect("could not set current directory");
 }
 
-async fn prepare_input_artifact(config: AgentConfig<'_>, id: ObjectId) {
+async fn prepare_input_artifact(config: AgentConfig, id: ObjectId) {
     let artifact_tar_file = format!("{}.tar", id);
     let artifact_download_response = artifact::download(config.sdk_config, id).await;
 

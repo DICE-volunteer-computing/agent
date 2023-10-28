@@ -2,17 +2,20 @@ use rust_sdk::config::config::{SdkConfig, Stage};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct AgentConfig<'a> {
-    pub root: &'a str,
+pub struct AgentConfig {
+    pub root: String,
     pub sdk_config: SdkConfig,
     pub work_check_interval_seconds: u64,
 }
 
-impl<'a> AgentConfig<'a> {
-    pub fn dev_default() -> Self {
+impl AgentConfig {
+    pub fn dev_default(token: String) -> Self {
         AgentConfig {
-            root: "/tmp/dice",
-            sdk_config: SdkConfig { stage: Stage::Dev },
+            root: format!("/tmp/dice"),
+            sdk_config: SdkConfig {
+                stage: Stage::Dev,
+                auth: token,
+            },
             work_check_interval_seconds: 1,
         }
     }

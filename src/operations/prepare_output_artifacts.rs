@@ -13,7 +13,7 @@ use crate::{
 
 use super::update_status::set_artifact_status;
 
-pub async fn prepare_output_artifacts(config: AgentConfig<'_>, id: ObjectId, project_id: ObjectId) {
+pub async fn prepare_output_artifacts(config: AgentConfig, id: ObjectId, project_id: ObjectId) {
     set_current_dir(config.get_job_execution_output_path(id.to_string().as_str()))
         .expect("could not set current directory");
 
